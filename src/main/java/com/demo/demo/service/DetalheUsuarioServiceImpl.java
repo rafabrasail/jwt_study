@@ -28,4 +28,11 @@ public class DetalheUsuarioServiceImpl implements UserDetailsService {
         }
         return new DetalheUsuarioData(usuario);
     }
+
+    public void initUser(){
+        UsuarioModel usuarioModel = new UsuarioModel();
+        usuarioModel.setId(null);
+        usuarioModel.setLogin("rsanto");
+        usuarioModel.setPassword("admin@pass");
+    }
 }

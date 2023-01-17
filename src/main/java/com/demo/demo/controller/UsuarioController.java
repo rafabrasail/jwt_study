@@ -3,6 +3,9 @@ package com.demo.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.demo.model.UsuarioModel;
 import com.demo.demo.repository.UsuarioRepository;
+import com.demo.demo.service.DetalheUsuarioServiceImpl;
 
 
 
@@ -24,6 +28,9 @@ public class UsuarioController {
 
     private final UsuarioRepository repository;
     private final PasswordEncoder encoder;
+
+    @Autowired
+    private DetalheUsuarioServiceImpl detalheUsuarioServiceImpl;
 
     public UsuarioController(UsuarioRepository repository, PasswordEncoder encoder){
         this.repository = repository;
@@ -54,5 +61,10 @@ public class UsuarioController {
 
         HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
         return ResponseEntity.status(status).body(valid);
+    }
+
+    @PostConstruct
+    public void initUser(){
+        detalheUsuarioServiceImpl.initUser();
     }
 }
