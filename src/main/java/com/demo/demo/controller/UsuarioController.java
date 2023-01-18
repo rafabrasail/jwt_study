@@ -29,9 +29,6 @@ public class UsuarioController {
     private final UsuarioRepository repository;
     private final PasswordEncoder encoder;
 
-    @Autowired
-    private DetalheUsuarioServiceImpl detalheUsuarioServiceImpl;
-
     public UsuarioController(UsuarioRepository repository, PasswordEncoder encoder){
         this.repository = repository;
         this.encoder = encoder;
@@ -61,10 +58,5 @@ public class UsuarioController {
 
         HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
         return ResponseEntity.status(status).body(valid);
-    }
-
-    @PostConstruct
-    public void initUser(){
-        detalheUsuarioServiceImpl.initUser();
     }
 }
