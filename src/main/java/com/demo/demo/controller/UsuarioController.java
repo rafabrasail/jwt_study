@@ -29,9 +29,17 @@ public class UsuarioController {
     private final UsuarioRepository repository;
     private final PasswordEncoder encoder;
 
+    @Autowired
+    private DetalheUsuarioServiceImpl detalheUsuarioServiceImpl;
+
     public UsuarioController(UsuarioRepository repository, PasswordEncoder encoder){
         this.repository = repository;
         this.encoder = encoder;
+    }
+
+    @PostConstruct
+    public void initUser(){
+        detalheUsuarioServiceImpl.initUser();
     }
 
     @GetMapping("/listarTodos")
