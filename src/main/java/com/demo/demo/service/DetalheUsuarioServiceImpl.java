@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.demo.demo.data.DetalheUsuarioData;
 import com.demo.demo.model.RoleModel;
 import com.demo.demo.model.UsuarioModel;
+import com.demo.demo.repository.FuncionalidadesRepository;
 import com.demo.demo.repository.RoleRepository;
 import com.demo.demo.repository.UsuarioRepository;
 
@@ -26,11 +27,15 @@ public class DetalheUsuarioServiceImpl implements UserDetailsService {
     @Autowired
     private final RoleRepository roleRepository;
 
+    @Autowired
+    private final FuncionalidadesRepository funcionalidadesRepository;
+
     public DetalheUsuarioServiceImpl(UsuarioRepository repository, PasswordEncoder encoder,
-                                    RoleRepository roleRepository){
+                                    RoleRepository roleRepository, FuncionalidadesRepository funcionalidadesRepository){
         this.repository = repository;
         this.encoder = encoder;
         this.roleRepository = roleRepository;
+        this.funcionalidadesRepository = funcionalidadesRepository;
     }
 
     @Override
@@ -47,14 +52,14 @@ public class DetalheUsuarioServiceImpl implements UserDetailsService {
         roleAdminModel.setId(null);
         roleAdminModel.setRoleName("admin");
         roleAdminModel.setDescription("admin role");
-        roleAdminModel.setFunctionalities("null");
+        roleAdminModel.setFunctionalities(funcionalidadesRepository.getReferenceById(1));
         roleRepository.save(roleAdminModel);
 
         RoleModel roleUserModel = new RoleModel();
         roleUserModel.setId(null);
         roleUserModel.setRoleName("user");
         roleUserModel.setDescription("user role");
-        roleUserModel.setFunctionalities("null");
+        roleUserModel.setFunctionalities(funcionalidadesRepository.getReferenceById(2));
         roleRepository.save(roleUserModel);
 
         UsuarioModel usuarioModel_01 = new UsuarioModel();

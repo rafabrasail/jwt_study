@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +28,7 @@ public class RoleModel {
     @Column
     private String description;
 
-    @Column
-    private String functionalities;
-    
+    @ManyToOne
+    @JoinColumn(name= "funcionalidade_id")
+    private FuncionalidadeModel functionalities;
 }

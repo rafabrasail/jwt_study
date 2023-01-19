@@ -28,6 +28,14 @@ public class DetalhesFuncionalidadeServiceImpl {
         func1.setReports(chaveFuncionalidadeRepository.getReferenceById(8));
         func1.setTechPubs(chaveFuncionalidadeRepository.getReferenceById(4));
         funcionalidadesRepository.save(func1);
+
+        FuncionalidadeModel func2 = new FuncionalidadeModel();
+        func2.setId(null);
+        func2.setAlerts(chaveFuncionalidadeRepository.getReferenceById(3));
+        func2.setHistory(chaveFuncionalidadeRepository.getReferenceById(7));
+        func2.setReports(chaveFuncionalidadeRepository.getReferenceById(4));
+        func2.setTechPubs(chaveFuncionalidadeRepository.getReferenceById(2));
+        funcionalidadesRepository.save(func2);
     }
     
 }
