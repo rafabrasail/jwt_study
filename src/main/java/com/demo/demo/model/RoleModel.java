@@ -24,7 +24,7 @@ public class RoleModel {
 
     @Column
     private String roleName;
-
+    
     @Column
     private String description;
 

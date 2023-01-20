@@ -73,5 +73,9 @@ public class DetalheUsuarioServiceImpl implements UserDetailsService {
         usuarioModel_02.setLogin("zeca");
         usuarioModel_02.setPassword(encoder.encode("zeca@pass"));
         repository.save(usuarioModel_02);
+
+        //direto no banco de dados
+        // insert into user_demo.user_role (usuario_id, roles_id) values (1,1);
+
     }
 }
