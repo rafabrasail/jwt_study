@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -24,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name="usuario")
+@Entity(name = "usuario")
 public class UsuarioModel {
     
     @Id
@@ -41,4 +42,8 @@ public class UsuarioModel {
     @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name="usuario_id")},
                                    inverseJoinColumns = {@JoinColumn(name="roles_id")})
     private Set<RoleModel> role = new HashSet<>();
+
+    public void addRole(RoleModel role){
+        this.role.add(role);
+    }
 }

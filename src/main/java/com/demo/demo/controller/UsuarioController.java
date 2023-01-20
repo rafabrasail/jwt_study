@@ -9,12 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.demo.demo.model.UsuarioModel;
 import com.demo.demo.repository.UsuarioRepository;
@@ -66,5 +70,15 @@ public class UsuarioController {
 
         HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
         return ResponseEntity.status(status).body(valid);
+    }
+
+    @PutMapping("{id}")
+    public void atualizar(@PathVariable Integer id, @RequestBody @Validated UsuarioModel usuarioAtualizado){
+        repository.findById(id).map(
+                                    usuario -> {
+                                        usuario.setRole(null);
+                                        return repository.save(usuario);
+                                   }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "cliente nao encontrado"));
+                                   
     }
 }

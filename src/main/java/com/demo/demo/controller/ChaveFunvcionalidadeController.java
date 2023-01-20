@@ -7,6 +7,8 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,5 +37,10 @@ public class ChaveFunvcionalidadeController {
     @GetMapping("/listarTodos")
     public ResponseEntity<List<ChaveFuncionalidadeModel>> lsitarTodos(){
         return ResponseEntity.ok(chaveFuncionalidadeRepository.findAll());
+    }
+
+    @PostMapping("/salvar")
+    public ResponseEntity<ChaveFuncionalidadeModel> salvarChave(@RequestBody ChaveFuncionalidadeModel chaveFuncionalidadeModel){
+        return ResponseEntity.ok(chaveFuncionalidadeRepository.save(chaveFuncionalidadeModel));
     }
 }

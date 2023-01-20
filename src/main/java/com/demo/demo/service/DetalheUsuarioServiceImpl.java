@@ -1,6 +1,8 @@
 package com.demo.demo.service;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,6 +47,25 @@ public class DetalheUsuarioServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Usuário [" + username + "] não encontrado");
         }
         return new DetalheUsuarioData(usuario);
+    }
+
+    //Supostamente para criar novov usuario
+    public UsuarioModel registerUser(UsuarioModel usuarioModel){
+        RoleModel role = roleRepository.findByRoleName("UsuarioModel").get();
+        Set<RoleModel> userRoles = new HashSet<>();
+        userRoles.add(role);
+        usuarioModel.setRole(userRoles);
+        return repository.save(usuarioModel);
+        
+    }
+
+    //Testar - pegar usuario existente e alterar a role
+    public void registerRoleInUser(UsuarioModel usuario, RoleModel role){
+        RoleModel roleModel = roleRepository.findByRoleName("RoleModel").get();
+        Set<RoleModel> userRoles = new HashSet<>();
+        UsuarioModel usuarioModel = repository.findById(null).get();
+        userRoles.add(roleModel);
+        usuarioModel.setRole(userRoles);
     }
 
     public void initUser(){
