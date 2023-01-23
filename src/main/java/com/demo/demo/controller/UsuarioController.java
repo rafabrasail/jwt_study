@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,5 +81,17 @@ public class UsuarioController {
                                         return repository.save(usuario);
                                    }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "cliente nao encontrado"));
                                    
+    }
+
+    @GetMapping({ "/forAdmin" })
+    @PreAuthorize("hasRole('ADMIN')")
+    public String forAdmin() {
+        return "This URL is only accessible to the admin";
+    }
+
+    @GetMapping({ "/forUser" })
+    @PreAuthorize("hasRole('User')")
+    public String forUser() {
+        return "This URL is only accessible to the user";
     }
 }

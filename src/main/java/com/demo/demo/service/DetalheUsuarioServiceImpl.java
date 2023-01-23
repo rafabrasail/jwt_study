@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -68,6 +69,15 @@ public class DetalheUsuarioServiceImpl implements UserDetailsService {
         usuarioModel.setRole(userRoles);
     }
 
+    //Authority in some way
+    private Set getAuthority(UsuarioModel usuarioModel){
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        usuarioModel.getRole().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
+        });
+        return authorities;
+    }
+
     public void initUser(){
         RoleModel roleAdminModel = new RoleModel();
         roleAdminModel.setId(null);
@@ -87,16 +97,20 @@ public class DetalheUsuarioServiceImpl implements UserDetailsService {
         usuarioModel_01.setId(null);
         usuarioModel_01.setLogin("rsanto");
         usuarioModel_01.setPassword(encoder.encode("admin@pass"));
+        Set<RoleModel> role_01 = new HashSet<>();
+        role_01.add(roleAdminModel);
+        usuarioModel_01.setRole(role_01);
         repository.save(usuarioModel_01);
 
         UsuarioModel usuarioModel_02 = new UsuarioModel();
         usuarioModel_02.setId(null);
         usuarioModel_02.setLogin("zeca");
         usuarioModel_02.setPassword(encoder.encode("zeca@pass"));
+        Set<RoleModel> role_02 = new HashSet<>();
+        role_02.add(roleUserModel);
+        usuarioModel_02.setRole(role_02);
         repository.save(usuarioModel_02);
 
-        //direto no banco de dados
         // insert into user_demo.user_role (usuario_id, roles_id) values (1,1);
-
     }
 }

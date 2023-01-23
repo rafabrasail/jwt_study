@@ -1,9 +1,7 @@
 package com.demo.demo.model;
 
-import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,14 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Data
 @NoArgsConstructor
@@ -38,12 +34,8 @@ public class UsuarioModel {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //esconde a senha na API
     private String password;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name="usuario_id")},
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",schema="user_demo", joinColumns = {@JoinColumn(name="usuario_id")},
                                    inverseJoinColumns = {@JoinColumn(name="roles_id")})
-    private Set<RoleModel> role = new HashSet<>();
-
-    public void addRole(RoleModel role){
-        this.role.add(role);
-    }
+    private Set<RoleModel> role;
 }
